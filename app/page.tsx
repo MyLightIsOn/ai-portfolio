@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./page.module.css";
 
 const Home = () => {
@@ -10,6 +10,14 @@ const Home = () => {
     "File search": "file-search",
     All: "all",
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      window.location.replace("/login");
+    }
+  }, []);
 
   return (
     <main className={styles.main}>
