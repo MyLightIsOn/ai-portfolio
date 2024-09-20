@@ -7,7 +7,7 @@ import Markdown from "react-markdown";
 // @ts-expect-error - no types for this yet
 import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistants";
 import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
-
+import Ascii from "@/app/components/ascii";
 type MessageProps = {
   role: "user" | "assistant" | "code";
   text: string;
@@ -19,8 +19,11 @@ const UserMessage = ({ text }: { text: string }) => {
 
 const AssistantMessage = ({ text }: { text: string }) => {
   return (
-    <div className={styles.assistantMessage}>
-      <Markdown>{text}</Markdown>
+    <div className={"assistant-message-container"}>
+      <Ascii />
+      <div className={styles.assistantMessage}>
+        <Markdown>{text}</Markdown>
+      </div>
     </div>
   );
 };
@@ -53,7 +56,7 @@ const Message = ({ role, text }: MessageProps) => {
 
 type ChatProps = {
   functionCallHandler?: (
-    toolCall: RequiredActionFunctionToolCall
+    toolCall: RequiredActionFunctionToolCall,
   ) => Promise<string>;
 };
 
@@ -94,7 +97,7 @@ const Chat = ({
         body: JSON.stringify({
           content: text,
         }),
-      }
+      },
     );
     const stream = AssistantStream.fromReadableStream(response.body);
     handleReadableStream(stream);
@@ -112,7 +115,7 @@ const Chat = ({
           runId: runId,
           toolCallOutputs: toolCallOutputs,
         }),
-      }
+      },
     );
     const stream = AssistantStream.fromReadableStream(response.body);
     handleReadableStream(stream);
@@ -142,7 +145,7 @@ const Chat = ({
   const handleTextDelta = (delta) => {
     if (delta.value != null) {
       appendToLastMessage(delta.value);
-    };
+    }
     if (delta.annotations != null) {
       annotateLastMessage(delta.annotations);
     }
@@ -151,7 +154,7 @@ const Chat = ({
   // imageFileDone - show image in chat
   const handleImageFileDone = (image) => {
     appendToLastMessage(`\n![${image.file_id}](/api/files/${image.file_id})\n`);
-  }
+  };
 
   // toolCallCreated - log new tool call
   const toolCallCreated = (toolCall) => {
@@ -168,7 +171,7 @@ const Chat = ({
 
   // handleRequiresAction - handle function call
   const handleRequiresAction = async (
-    event: AssistantStreamEvent.ThreadRunRequiresAction
+    event: AssistantStreamEvent.ThreadRunRequiresAction,
   ) => {
     const runId = event.data.id;
     const toolCalls = event.data.required_action.submit_tool_outputs.tool_calls;
@@ -177,7 +180,7 @@ const Chat = ({
       toolCalls.map(async (toolCall) => {
         const result = await functionCallHandler(toolCall);
         return { output: result, tool_call_id: toolCall.id };
-      })
+      }),
     );
     setInputDisabled(true);
     submitActionResult(runId, toolCallOutputs);
@@ -236,17 +239,16 @@ const Chat = ({
         ...lastMessage,
       };
       annotations.forEach((annotation) => {
-        if (annotation.type === 'file_path') {
+        if (annotation.type === "file_path") {
           updatedLastMessage.text = updatedLastMessage.text.replaceAll(
             annotation.text,
-            `/api/files/${annotation.file_path.file_id}`
+            `/api/files/${annotation.file_path.file_id}`,
           );
         }
-      })
+      });
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
-    
-  }
+  };
 
   return (
     <div className={styles.chatContainer}>

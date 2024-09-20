@@ -1,25 +1,19 @@
 "use client";
+
 import React from "react";
-import styles from "@/app/page.module.css";
-
 import Chat from "@/app/components/chat";
-import FileViewer from "@/app/components/file-viewer";
 
-const FileSearchPage = () => {
+const Home = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <div className={styles.column}>
-          <FileViewer />
-        </div>
-        <div className={styles.chatContainer}>
-          <div className={styles.chat}>
-            <Chat />
-          </div>
+    <main className={"theme-green"}>
+      <div id="crt">
+        <div className="scanline"></div>
+        <div className="terminal">
+          <Chat />
         </div>
       </div>
     </main>
   );
 };
 
-export default FileSearchPage;
+export default Home;
