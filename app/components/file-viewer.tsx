@@ -64,17 +64,20 @@ const FileViewer = () => {
         {files.length === 0 ? (
           <div className={styles.title}>Attach files to test file search</div>
         ) : (
-          files.map((file) => (
-            <div key={file.file_id} className={styles.fileEntry}>
-              <div className={styles.fileName}>
-                <span className={styles.fileName}>{file.filename}</span>
-                <span className={styles.fileStatus}>{file.status}</span>
+          files.map((file) => {
+            console.log(file);
+            return (
+              <div key={file.file_id} className={styles.fileEntry}>
+                <div className={styles.fileName}>
+                  <span className={styles.fileName}>{file.filename}</span>
+                  <span className={styles.fileStatus}>{file.status}</span>
+                </div>
+                <span onClick={() => handleFileDelete(file.file_id)}>
+                  <TrashIcon />
+                </span>
               </div>
-              <span onClick={() => handleFileDelete(file.file_id)}>
-                <TrashIcon />
-              </span>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
       <div className={styles.fileUploadContainer}>
