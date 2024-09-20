@@ -23,7 +23,7 @@
 /*********** GENERIC STUFF *************/
 
 html {
-  font-size: 12px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 *,
@@ -98,6 +98,7 @@ input {
 .typer {
   margin: auto;
   word-break: break-word;
+  max-width: 1200px;
 }
 
 /*********** PARTS OF THE SCREEN *************/
@@ -131,10 +132,11 @@ pre {
 #crt {
   min-width: 80ch; /* This makes 80 monospace characters fit on the screen */
   height: 100vh;
-  font-size: max(
+  font-size: 1.5em;
+ /* font-size: max(
           1rem,
           2.2vmin
-  ); /* Scale the font-size relative to the minimum screen dimension */
+  ); !* Scale the font-size relative to the minimum screen dimension *!*/
   position: relative;
   background: var(--bg);
   background-image: radial-gradient(

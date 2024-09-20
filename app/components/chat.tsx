@@ -73,6 +73,14 @@ const Chat = ({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      window.location.replace("/login");
+    }
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
