@@ -1,13 +1,13 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "./crt.css"
+import "./crt.css";
 import Warnings from "./components/warnings";
 import { assistantId } from "./assistant-config";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Assistants API Quickstart",
-  description: "A quickstart template using the Assistants API with OpenAI",
+  title: "Lawrence AI Portfolio",
+  description: "An AI driven portfolio",
   icons: {
     icon: "/openai.svg",
   },

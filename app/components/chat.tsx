@@ -18,11 +18,12 @@ const UserMessage = ({ text }: { text: string }) => {
 };
 
 const AssistantMessage = ({ text }: { text: string }) => {
+  const formattedText = text.replace(/【\d+:\d+†[^】]+】/g, "").trim();
   return (
     <div className={"assistant-message-container"}>
       <Ascii />
       <div className={styles.assistantMessage}>
-        <Markdown>{text}</Markdown>
+        <Markdown>{formattedText}</Markdown>
       </div>
     </div>
   );
@@ -67,6 +68,7 @@ const Chat = ({
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState("");
+  const [start, setStart] = useState(false);
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -140,6 +142,19 @@ const Chat = ({
     setUserInput("");
     setInputDisabled(true);
     scrollToBottom();
+  };
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    sendMessage("Start");
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { role: "user", text: "Start" },
+    ]);
+    setUserInput("");
+    setInputDisabled(true);
+    scrollToBottom();
+    setStart(true);
   };
 
   /* Stream Event Handlers */
@@ -260,31 +275,40 @@ const Chat = ({
 
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.messages}>
-        {messages.map((msg, index) => (
-          <Message key={index} role={msg.role} text={msg.text} />
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className={`${styles.inputForm} ${styles.clearfix}`}
-      >
-        <input
-          type="text"
-          className={styles.input}
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-          placeholder="Enter your question"
-        />
-        <button
-          type="submit"
-          className={styles.button}
-          disabled={inputDisabled}
-        >
-          Send
-        </button>
-      </form>
+      {!start && (
+        <form className={styles.startForm} onSubmit={handleStart}>
+          <button>Start</button>
+        </form>
+      )}
+      {start && (
+        <>
+          <div className={styles.messages}>
+            {messages.map((msg, index) => (
+              <Message key={index} role={msg.role} text={msg.text} />
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className={`${styles.inputForm} ${styles.clearfix}`}
+          >
+            <input
+              type="text"
+              className={styles.input}
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Enter your question"
+            />
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={inputDisabled}
+            >
+              Send
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

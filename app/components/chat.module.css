@@ -7,6 +7,10 @@
   margin: 0 auto;
 }
 
+.chatContainer a {
+  text-shadow: none;
+}
+
 .inputForm {
   display: flex;
   width: 100%;
@@ -40,8 +44,34 @@
   font-family: monospace;
 }
 
+.button:hover {
+  background-color: black;
+  color: var(--green-color);
+  border: var(--green-color) 1px solid;
+}
+
 .button:disabled {
   background-color: lightgrey;
+}
+
+.startForm {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: monospace;
+}
+
+.startForm button {
+  font-family: monospace;
+  padding: 10px 16px;
+}
+
+.startForm button:hover {
+  background-color: black;
+  color: var(--green-color);
+  border: var(--green-color) 1px solid;
 }
 
 .messages {
