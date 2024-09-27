@@ -8,4 +8,7 @@ You can also ask it question about use cases and other information about me.
 
 Lastly, I wanted to style it in the spirit of 1980's AI style with the old school terminal. Think the comptuer from Wargames:
 
+#### Potfolio: https://lawrence-ai-portfolio.vercel.app/
+
+
 ![](https://media.wired.com/photos/5932513852d99d6b984ddab3/master/w_1600%2Cc_limit/terminal2.jpg)
